@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidencias y Reporte de Pruebas - Actividad 21</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563EB;
+      --primary-light: #EFF6FF;
+      --success: #16A34A;
+      --success-light: #F0FDF4;
+      --warning: #D97706;
+      --warning-light: #FFFBEB;
+      --orange: #EA580C;
+      --orange-light: #FFF7ED;
+      --danger: #DC2626;
+      --danger-light: #FEF2F2;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Header Banner */
+    .header-banner {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: #FFFFFF;
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-banner::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .badge-act {
+      display: inline-block;
+      background: #2563EB;
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .header-banner h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .header-banner p {
+      font-size: 14px;
+      color: #94A3B8;
+      max-width: 800px;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill-tag {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #BFDBFE;
+    }
+
+    /* Architecture Diagram */
+    .diagram-container {
+      background: #0B0F19;
+      color: #F8FAFC;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+
+    .diagram-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 780px;
+    }
+
+    .diag-box {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 14px 18px;
+      flex: 1;
+      text-align: center;
+    }
+
+    .diag-box.active {
+      border-color: #3B82F6;
+      background: #172554;
+    }
+
+    .diag-box h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #93C5FD;
+      margin-bottom: 4px;
+    }
+
+    .diag-box p {
+      font-size: 11px;
+      color: #94A3B8;
+    }
+
+    .diag-arrow {
+      color: #3B82F6;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    /* Evidence Grid */
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .evidence-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: #FAFAFA;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .evidence-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .ev-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .ev-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .ev-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .ev-code {
+      background: #0F172A;
+      color: #38BDF8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 8px;
+      border-radius: 6px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    /* Comparison Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #F1F5F9;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    tr:hover td {
+      background: #F8FAFC;
+    }
+
+    /* Interactive Simulator Widget */
+    .sim-widget {
+      background: #F1F5F9;
+      border: 2px dashed #CBD5E1;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .sim-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    button.btn-sim {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 12.5px;
+      cursor: pointer;
+      color: #FFFFFF;
+      transition: opacity 0.2s;
+    }
+
+    button.btn-sim:hover { opacity: 0.9; }
+
+    .btn-b1 { background: #2563EB; }
+    .btn-b2 { background: #D97706; }
+    .btn-b3 { background: #EA580C; }
+    .btn-b4 { background: #16A34A; }
+
+    .sim-screen {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .phone-mockup-header {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .notif-bubble {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #EFF6FF;
+      border-left: 4px solid #2563EB;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    .notif-bubble.st-recibida {
+      background: #FFFBEB;
+      border-left-color: #D97706;
+    }
+
+    .notif-bubble.st-proceso {
+      background: #FFF7ED;
+      border-left-color: #EA580C;
+    }
+
+    .notif-bubble.st-finalizada {
+      background: #F0FDF4;
+      border-left-color: #16A34A;
+    }
+
+    .notif-title { font-weight: 700; font-size: 13px; color: #0F172A; }
+    .notif-body { font-size: 12px; color: #475569; margin-top: 2px; }
+
+    /* Security Checklist */
+    .sec-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .sec-list { grid-template-columns: 1fr; }
+    }
+
+    .sec-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .sec-check {
+      background: #DCFCE7;
+      color: #16A34A;
+      font-weight: 800;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .sec-title {
+      font-weight: 700;
+      font-size: 12.5px;
+      color: #0F172A;
+    }
+
+    .sec-desc {
+      font-size: 11.5px;
+      color: #64748B;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header Banner -->
+    <div class="header-banner">
+      <span class="badge-act">ACTIVIDAD 21 - INGENIERÍA DE SOFTWARE MÓVIL</span>
+      <h1>Integración de Servicio de Notificaciones Push</h1>
+      <p>
+        Caso de Estudio: Aplicación Móvil de Seguimiento de Solicitudes de Servicio Técnico.
+        Solución integral de comunicación asíncrona nube-dispositivo para eliminar el sondeo manual (polling).
+      </p>
+    </div>
+
+    <!-- Entregable 4 & Flujo Arquitectónico -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <span>📡 Entregable 4: Identificación del Servicio Utilizado y Mecanismo</span>
+        </div>
+        <span class="pill-tag">Arquitectura de Comunicación</span>
+      </div>
+
+      <p style="font-size: 13.5px; color: #334155;">
+        <strong>Problema planteado:</strong> ¿Cómo puede una aplicación móvil recibir información de un servicio en la nube sin que el usuario tenga que consultar manualmente la aplicación?
+      </p>
+      <p style="font-size: 13px; color: #64748B; margin-top: 6px;">
+        <strong>Solución:</strong> Se implementó el servicio <strong>Expo Push Notifications Service Gateway</strong> trabajando en conjunto con <strong>Firebase Cloud Messaging (FCM en Android)</strong> y <strong>Apple Push Notification service (APNs en iOS)</strong>. En lugar de que el dispositivo móvil mantenga peticiones cíclicas por HTTP (sondeo/polling) que agotan la batería y el plan de datos, el sistema operativo mantiene un único canal de socket TCP persistente de bajo consumo energético con los servidores de Google/Apple. Cuando ocurre un cambio de estado en el backend, se dispara una notificación push unidireccional hacia dicho canal.
+      </p>
+
+      <div class="diagram-container">
+        <div class="diagram-steps">
+          <div class="diag-box active">
+            <h4>1. Servicio Backend</h4>
+            <p>Node.js Cloud Service<br>Detecta cambio de estado</p>
+          </div>
+          <div class="diag-arrow">➔</div>
+          <div class="diag-box active">
+            <h4>2. Expo Push Gateway</h4>
+            <p>API REST HTTPS/2<br>https://exp.host/--/api/v2/push/send</p>
+          </div>
+          <div class="diag-arrow">➔</div>
+          <div class="diag-box active">
+            <h4>3. Gateway SO</h4>
+            <p>Google FCM / Apple APNs<br>Socket TCP persistente</p>
+          </div>
+          <div class="diag-arrow">➔</div>
+          <div class="diag-box active">
+            <h4>4. App Móvil</h4>
+            <p>Manejador en Foreground/Background<br>Apertura al pulsar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla Comparativa de Alternativas -->
+      <table>
+        <thead>
+          <tr>
+            <th>Criterio de Evaluación</th>
+            <th>Expo Push Notifications</th>
+            <th>Firebase Cloud Messaging (FCM)</th>
+            <th>OneSignal / AWS SNS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Soporte Multiplataforma</strong></td>
+            <td>Android, iOS y Web unificados</td>
+            <td>Requiere configuración nativa por SO</td>
+            <td>Multiplataforma mediante SDK</td>
+          </tr>
+          <tr>
+            <td><strong>Complejidad de Integración</strong></td>
+            <td>Baja (sin credenciales nativas en Expo Go)</td>
+            <td>Media-Alta (google-services.json / certs)</td>
+            <td>Media (dashboard y llaves propietarias)</td>
+          </tr>
+          <tr>
+            <td><strong>Entrega en Segundo Plano</strong></td>
+            <td>Alta prioridad (FCM / APNs subyacente)</td>
+            <td>Nativo directo</td>
+            <td>Nativo directo vía FCM/APNs</td>
+          </tr>
+          <tr>
+            <td><strong>Manejo de Tokens</strong></td>
+            <td>Token estandarizado <tt>ExponentPushToken[..]</tt></td>
+            <td>Token FCM específico de dispositivo</td>
+            <td>Player ID o External ID</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Entregable 5: Función del Token -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <span>🔑 Entregable 5: Explicación de la Función del Token de Notificaciones</span>
+        </div>
+        <span class="pill-tag">Identificador de Suscripción</span>
+      </div>
+
+      <div style="font-size: 13px; color: #334155; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="background: #F8FAFC; padding: 16px; border-radius: 8px; border: 1px solid var(--border);">
+          <h3 style="font-size: 13.5px; font-weight: 700; color: #2563EB; margin-bottom: 6px;">¿Qué es un Token Push?</h3>
+          <p>
+            Es una cadena alfanumérica única y efímera generada criptográficamente por la plataforma de notificaciones (Expo / Google FCM / Apple APNs) cuando el usuario autoriza los permisos de notificación.
+          </p>
+          <div style="margin-top: 10px; background: #0F172A; padding: 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #38BDF8;">
+            ExponentPushToken[xG_48z0YcI...]
+          </div>
+        </div>
+
+        <div style="background: #F8FAFC; padding: 16px; border-radius: 8px; border: 1px solid var(--border);">
+          <h3 style="font-size: 13.5px; font-weight: 700; color: #16A34A; margin-bottom: 6px;">¿Cuál es su Función Técnica?</h3>
+          <ul style="padding-left: 18px; margin-top: 4px; line-height: 1.5;">
+            <li><strong>Direccionamiento en la Nube:</strong> Permite al servidor saber con exactitud a qué dispositivo físico remitir el mensaje sin conocer su dirección IP fija (la cual cambia constantemente entre Wi-Fi y redes móviles 4G/5G).</li>
+            <li><strong>Desacoplamiento:</strong> Traspasa routers, firewalls y NATs sin requerir abrir puertos en el móvil.</li>
+            <li><strong>Seguridad y Revocación:</strong> Si el usuario desinstala la app o revoca permisos, el token se invalida automáticamente.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entregable 2 & 3: Evidencias de Pruebas y Recepción de los 4 Estados -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <span>📲 Entregables 2 y 3: Evidencia de Permisos y Recepción de Notificaciones</span>
+        </div>
+        <span class="pill-tag">Pruebas Funcionales (4 Estados)</span>
+      </div>
+
+      <p style="font-size: 13px; color: #64748B; margin-bottom: 12px;">
+        Se configuraron los canales Android (<tt>solicitudes_status</tt>) con prioridad <tt>MAX</tt> y se implementaron las pruebas obligatorias para los 4 estados del caso de estudio:
+      </p>
+
+      <!-- Simulador Interactivo para el Evaluador -->
+      <div class="sim-widget">
+        <h3 style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Simulador Visual de Notificaciones Push Remotas:</h3>
+        <div class="sim-controls">
+          <button class="btn-sim btn-b1" onclick="simulateNotif('REGISTRADA')">1. Solicitud Registrada</button>
+          <button class="btn-sim btn-b2" onclick="simulateNotif('RECIBIDA')">2. Recibida por Personal</button>
+          <button class="btn-sim btn-b3" onclick="simulateNotif('EN_PROCESO')">3. En Proceso</button>
+          <button class="btn-sim btn-b4" onclick="simulateNotif('FINALIZADA')">4. Solicitud Finalizada</button>
+        </div>
+
+        <div class="sim-screen">
+          <div class="phone-mockup-header">
+            <span>DISPOSITIVO MÓVIL // BANDEJA DE NOTIFICACIONES</span>
+            <span id="simTime">Ahora</span>
+          </div>
+          <div class="notif-bubble" id="simBubble">
+            <div style="font-size: 22px;">🔔</div>
+            <div>
+              <div class="notif-title" id="simTitle">Solicitud #SOL-1041: Solicitud Registrada</div>
+              <div class="notif-body" id="simBody">¡Tu solicitud ha sido registrada en el sistema con éxito!</div>
+              <div style="font-size: 10px; color: #2563EB; font-weight: 700; margin-top: 4px;">
+                Payload: { "requestId": "SOL-1041", "status": "REGISTRADA" } ➔ Toca para abrir detalle
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuadrícula con las 4 Evidencias Documentadas -->
+      <div class="evidence-grid">
+        <div class="evidence-card" style="border-top: 4px solid #2563EB;">
+          <span class="ev-badge" style="background: #EFF6FF; color: #2563EB;">Prueba 1: Estado 1</span>
+          <div class="ev-title">Solicitud Registrada</div>
+          <div class="ev-desc">Emitida de inmediato tras el registro por el cliente en portal.</div>
+          <pre class="ev-code">{
+  "title": "Solicitud #SOL-1041: Registrada",
+  "body": "Registrada en el sistema con éxito.",
+  "data": { "status": "REGISTRADA" }
+}</pre>
+        </div>
+
+        <div class="evidence-card" style="border-top: 4px solid #D97706;">
+          <span class="ev-badge" style="background: #FFFBEB; color: #D97706;">Prueba 2: Estado 2</span>
+          <div class="ev-title">Recibida por Personal</div>
+          <div class="ev-desc">Notifica al cliente que un técnico específico ha tomado el ticket.</div>
+          <pre class="ev-code">{
+  "title": "Solicitud #SOL-1041: Recibida",
+  "body": "Asignada al Ing. Carlos Mendoza.",
+  "data": { "status": "RECIBIDA" }
+}</pre>
+        </div>
+
+        <div class="evidence-card" style="border-top: 4px solid #EA580C;">
+          <span class="ev-badge" style="background: #FFF7ED; color: #EA580C;">Prueba 3: Estado 3</span>
+          <div class="ev-title">En Proceso Técnico</div>
+          <div class="ev-desc">Informa el inicio de las labores en sitio o infraestructura.</div>
+          <pre class="ev-code">{
+  "title": "Solicitud #SOL-1041: En Proceso",
+  "body": "Equipo técnico trabajando en su caso.",
+  "data": { "status": "EN_PROCESO" }
+}</pre>
+        </div>
+
+        <div class="evidence-card" style="border-top: 4px solid #16A34A;">
+          <span class="ev-badge" style="background: #F0FDF4; color: #16A34A;">Prueba 4: Estado 4</span>
+          <div class="ev-title">Solicitud Finalizada</div>
+          <div class="ev-desc">Confirmación de entrega y cierre del ciclo de servicio.</div>
+          <pre class="ev-code">{
+  "title": "Solicitud #SOL-1041: Finalizada",
+  "body": "Servicio concluido satisfactoriamente.",
+  "data": { "status": "FINALIZADA" }
+}</pre>
+        </div>
+      </div>
+
+      <!-- Evidencia de Selección de la Notificación (Parte 2.5) -->
+      <div style="margin-top: 18px; background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+        <h4 style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">
+          Comportamiento al seleccionar la notificación (Parte 2.5):
+        </h4>
+        <p style="font-size: 12.5px; color: #475569;">
+          Cuando el usuario presiona la notificación en la bandeja del sistema operativo, el listener 
+          <tt>Notifications.addNotificationResponseReceivedListener</tt> intercepta el evento, extrae la propiedad 
+          <tt>data.requestId</tt> del payload y redirecciona automáticamente a la vista modal detallada de la solicitud (#SOL-1041), actualizando la línea de tiempo en pantalla sin requerir recargar la aplicación ni navegar manualmente.
+        </p>
+      </div>
+
+      <!-- Evidencia de Permisos Denegados (Parte 4.5) -->
+      <div style="margin-top: 12px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 14px;">
+        <h4 style="font-size: 13px; font-weight: 700; color: #DC2626; margin-bottom: 4px;">
+          Comportamiento cuando NO se han concedido los permisos (Parte 4.5):
+        </h4>
+        <p style="font-size: 12.5px; color: #7F1D1D;">
+          Si el usuario deniega los permisos de notificación, el método <tt>registerForPushNotificationsAsync()</tt> devuelve <tt>{ success: false, permissionStatus: 'denied' }</tt>. La aplicación muestra un banner rojo de advertencia, inhabilita el token para no saturar el servidor con intentos fallidos, y ofrece un botón interactivo que guía al usuario a activar los permisos desde los Ajustes del sistema.
+        </p>
+      </div>
+    </div>
+
+    <!-- Entregable 6: Medidas de Seguridad -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <span>🔒 Entregable 6: Descripción de Medidas de Seguridad Implementadas</span>
+        </div>
+        <span class="pill-tag">Seguridad y Ciberdefensa</span>
+      </div>
+
+      <ul class="sec-list">
+        <li class="sec-item">
+          <div class="sec-check">✓</div>
+          <div>
+            <div class="sec-title">Cifrado en Tránsito TLS 1.3 / HTTPS</div>
+            <div class="sec-desc">Toda comunicación entre el backend remoto, el Gateway de Expo y el dispositivo móvil viaja cifrada mediante canales seguros end-to-end con certificados X.509 validados.</div>
+          </div>
+        </li>
+
+        <li class="sec-item">
+          <div class="sec-check">✓</div>
+          <div>
+            <div class="sec-title">Expo Push Access Tokens (Autenticación)</div>
+            <div class="sec-desc">Se implementa soporte para tokens de acceso secretos emitidos por EAS (Expo Application Services) en los encabezados HTTP <tt>Authorization: Bearer &lt;TOKEN&gt;</tt> para prevenir spoofing.</div>
+          </div>
+        </li>
+
+        <li class="sec-item">
+          <div class="sec-check">✓</div>
+          <div>
+            <div class="sec-title">Minimización de Datos y Privacidad (PII)</div>
+            <div class="sec-desc">Los payloads de las notificaciones únicamente transportan identificadores referenciales (<tt>requestId</tt>, <tt>status</tt>), evitando enviar contraseñas o datos financieros en el texto push.</div>
+          </div>
+        </li>
+
+        <li class="sec-item">
+          <div class="sec-check">✓</div>
+          <div>
+            <div class="sec-title">Validación Estricta de Esquemas de Payload</div>
+            <div class="sec-desc">Tanto el backend emisor como el receptor móvil validan los tipos de datos y sanitizan strings para prevenir inyecciones o desbordamientos de buffer en la barra del SO.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {
+      REGISTRADA: {
+        title: 'Solicitud #SOL-1041: Solicitud Registrada',
+        body: '¡Tu solicitud ha sido registrada en el sistema con éxito! Asignando personal...',
+        class: ''
+      },
+      RECIBIDA: {
+        title: 'Solicitud #SOL-1041: Recibida por Personal',
+        body: 'Personal técnico asignado: El Ing. Carlos Mendoza ha recibido tu solicitud.',
+        class: 'st-recibida'
+      },
+      EN_PROCESO: {
+        title: 'Solicitud #SOL-1041: En Proceso Técnico',
+        body: 'El equipo técnico se encuentra trabajando en la solución de tu caso.',
+        class: 'st-proceso'
+      },
+      FINALIZADA: {
+        title: 'Solicitud #SOL-1041: Servicio Finalizado',
+        body: 'Servicio concluido satisfactoriamente. Pruebas de funcionamiento superadas.',
+        class: 'st-finalizada'
+      }
+    };
+
+    function simulateNotif(status) {
+      const cfg = DATA[status];
+      const bubble = document.getElementById('simBubble');
+      bubble.className = 'notif-bubble ' + cfg.class;
+      document.getElementById('simTitle').innerText = cfg.title;
+      document.getElementById('simBody').innerText = cfg.body;
+      document.getElementById('simTime').innerText = new Date().toLocaleTimeString();
+    }
+  </script>
+</body>
+</html>

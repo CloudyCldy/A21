@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Act21 - Notificaciones Push",
+    "slug": "act21-push-notifications",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F172A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.autotrack.solicitudes"
+    },
+    "android": {
+      "package": "com.autotrack.solicitudes",
+      "permissions": [
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#EFF6FF",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#2563EB"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "act21-solicitudes-project"
+      }
+    }
+  }
+}
